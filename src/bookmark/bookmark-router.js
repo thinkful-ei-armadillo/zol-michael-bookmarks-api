@@ -1,3 +1,4 @@
+'use strict';
 const express    = require('express');
 const uuid       = require('uuid/v4');
 const logger     = require('../logger');
@@ -14,6 +15,7 @@ bookmarkRouter
   .post(bodyParser, (req, res) => {
     const { title, content } = req.body;
 
+  
     if (!title) {
       logger.error('Title is required');
       return res
