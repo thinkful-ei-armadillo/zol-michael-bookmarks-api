@@ -3,7 +3,7 @@ const express    = require('express');
 const uuid       = require('uuid/v4');
 const {isWebUri} = require('valid-url');
 const logger     = require('../logger');
-const  bookmarks = require('../store');
+const store      = require('../store');
 const BookmarksService = require('./bookmarks-service');
 
 const bookmarkRouter = express.Router();
