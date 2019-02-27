@@ -82,146 +82,146 @@ describe('Bookmark Endpoints', () => {
   });
 
   describe('DELETE /bookmarks/:id', () => {
-    context(`Given no bookmarks`, () => {
-        it('responds 404 when no bookmarks', () => {
-            const id = 1;
-            return supertest(app)
-                .delete(`/bookmarks/${id}`)
-                .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-                .expect(404, {
-                    error: {message: 'bookmark not found'}
-                });
-        });
+    context('Given no bookmarks', () => {
+      it('responds 404 when no bookmarks', () => {
+        const id = 1;
+        return supertest(app)
+          .delete(`/bookmarks/${id}`)
+          .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+          .expect(404, {
+            error: {message: 'Bookmark not found'}
+          });
+      });
     });
 
-    context(`Given bookmarks in database`, () => {
-        const testBookmarks = fixtures.makeBookmarkArray();
+    context('Given bookmarks in database', () => {
+      const testBookmarks = fixtures.makeBookmarkArray();
 
-        beforeEach('insert bookmarks', () => {
-            return db
-                .into('bookmarks')
-                .insert(testBookmarks)
-        });
+      beforeEach('insert bookmarks', () => {
+        return db
+          .into('bookmarks')
+          .insert(testBookmarks);
+      });
 
-        it('removes bookmark by id from store', () => {
-            const delId = 2;
-            const expected = testBookmarks.filter(b => b.id !== delId)
-            return supertest(app)
-                .delete(`/bookmarks/${delId}`)
-                .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-                .expect(204)
-                .then(() => {
-                    supertest(app)
-                    .get('/bookmarks')
-                    .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-                    .expect(expected)
-                });
-        });
+      it('removes bookmark by id from store', () => {
+        const delId = 2;
+        const expected = testBookmarks.filter(b => b.id !== delId);
+        return supertest(app)
+          .delete(`/bookmarks/${delId}`)
+          .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+          .expect(204)
+          .then(() => {
+            supertest(app)
+              .get('/bookmarks')
+              .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+              .expect(expected);
+          });
+      });
     });
   });
 
   describe('POST /bookmarks', () => {
     it('responds with 400 if title not supplied', () => {
-        const bookmarkNoTitle = {
-            // title: none,
-            url: 'http://test.com',
-            rating: 1
-        }
-        return supertest(app)
-            .post('/bookmarks')
-            .send(bookmarkNoTitle)
-            .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-            .expect(400, {
-                error: {message: 'title is required'}
-            });
+      const bookmarkNoTitle = {
+        // title: 'title',
+        url: 'http://test.com',
+        rating: 1
+      };
+      return supertest(app)
+        .post('/bookmarks')
+        .send(bookmarkNoTitle)
+        .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+        .expect(400, {
+          error: {message: 'title is required'}
+        });
     });  
 
     it('responds with 400 if url not supplied', () => {
-        const bookmarkNoUrl = {
-            title: 'test title',
-            // url: none,
-            rating: 1
-        }
-        return supertest(app)
-            .post('/bookmarks')
-            .send(bookmarkNoUrl)
-            .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-            .expect(400, {
-                error: {message: 'url is required'}
-            });
+      const bookmarkNoUrl = {
+        title: 'test title',
+        // url: none,
+        rating: 1
+      };
+      return supertest(app)
+        .post('/bookmarks')
+        .send(bookmarkNoUrl)
+        .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+        .expect(400, {
+          error: {message: 'url is required'}
+        });
     });
     
     it('responds with 400 if url not valid', () => {
-        const bookmarkInvalidUrl = {
-            title: 'test title',
-            url: 'invalid',
-            rating: 1
-        }
-        return supertest(app)
-            .post('/bookmarks')
-            .send(bookmarkInvalidUrl)
-            .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-            .expect(400, {
-                error: {message: 'url is invalid'}
-            });
+      const bookmarkInvalidUrl = {
+        title: 'test title',
+        url: 'invalid',
+        rating: 1
+      };
+      return supertest(app)
+        .post('/bookmarks')
+        .send(bookmarkInvalidUrl)
+        .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+        .expect(400, {
+          error: {message: 'url is invalid'}
+        });
     });
 
     it('responds with 400 if rating not supplied', () => {
-        const bookmarkNoRating = {
-            title: 'test title',
-            url: 'http://test.com',
-            // rating: none
-        }
-        return supertest(app)
-            .post('/bookmarks')
-            .send(bookmarkNoRating)
-            .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-            .expect(400, {
-                error: {message: 'rating is required'}
-            });
+      const bookmarkNoRating = {
+        title: 'test title',
+        url: 'http://test.com',
+        // rating: none
+      };
+      return supertest(app)
+        .post('/bookmarks')
+        .send(bookmarkNoRating)
+        .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+        .expect(400, {
+          error: {message: 'rating is required'}
+        });
     });
 
     it('responds with 400 if rating is not between 0 and 5', () => {
-        const bookmarkInvalidRating = {
-            title: 'test title',
-            url: 'http://test.com',
-            rating: 'invalid'
-        }
-        return supertest(app)
-            .post('/bookmarks')
-            .send(bookmarkInvalidRating)
-            .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-            .expect(400, {
-                error: {message: 'rating is invalid'}
-            });
+      const bookmarkInvalidRating = {
+        title: 'test title',
+        url: 'http://test.com',
+        rating: 'invalid'
+      };
+      return supertest(app)
+        .post('/bookmarks')
+        .send(bookmarkInvalidRating)
+        .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+        .expect(400, {
+          error: {message: 'rating is invalid'}
+        });
     });
 
-    it(`adds new bookmark to store`, () => {
-          const newBookmark = {
-              title: 'test title',
-              url: 'http://test.com',
-              description: 'test desc',
-              rating: 1
-          }
-          return supertest(app)
-            .post('/bookmarks')
-            .send(newBookmark)
+    it('adds new bookmark to store', () => {
+      const newBookmark = {
+        title: 'test title',
+        url: 'http://test.com',
+        description: 'test desc',
+        rating: 1
+      };
+      return supertest(app)
+        .post('/bookmarks')
+        .send(newBookmark)
+        .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+        .expect(201)
+        .expect(res => {
+          expect(res.body.title).to.eql(newBookmark.title);
+          expect(res.body.url).to.eql(newBookmark.url);
+          expect(res.body.description).to.eql(newBookmark.description);
+          expect(res.body.rating).to.eql(newBookmark.rating);
+          expect(res.body).to.have.property('id');
+          expect(res.headers.location).to.eql(`/bookmarks/${res.body.id}`);
+        })
+        .then(res => {
+          supertest(app)
+            .get(`/bookmarks/${res.body.id}`)
             .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-            .expect(201)
-            .expect(res => {
-                expect(res.body.title).to.eql(newbookmark.title)
-                expect(res.body.url).to.eql(newbookmark.url)
-                expect(res.body.description).to.eql(newbookmark.description)
-                expect(res.body.rating).to.eql(newbookmark.rating)
-                expect(res.body).to.have.property('id')
-                expect(res.headers.location).to.eql(`/bookmarks/${res.body.id}`)
-            })
-            .then(res => {
-                supertest(app)
-                    .get(`/bookmarks/${res.body.id}`)
-                    .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-                    .expect(res.body)
-            });
-      });
+            .expect(res.body);
+        });
+    });
   });
 });
