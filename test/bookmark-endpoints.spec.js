@@ -81,6 +81,45 @@ describe('Bookmark Endpoints', () => {
     });
   });
 
+  describe('DELETE /bookmarks/:id', () => {
+    context(`Given no bookmarks`, () => {
+        it('responds 404 when no bookmarks', () => {
+            const id = 1;
+            return supertest(app)
+                .delete(`/bookmarks/${id}`)
+                .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                .expect(404, {
+                    error: {message: 'bookmark not found'}
+                });
+        });
+    });
+
+    context(`Given bookmarks in database`, () => {
+        const testBookmarks = fixtures.makeBookmarkArray();
+
+        beforeEach('insert bookmarks', () => {
+            return db
+                .into('bookmarks')
+                .insert(testBookmarks)
+        });
+
+        it('removes bookmark by id from store', () => {
+            const delId = 2;
+            const expected = testBookmarks.filter(b => b.id !== delId)
+            return supertest(app)
+                .delete(`/bookmarks/${delId}`)
+                .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                .expect(204)
+                .then(() => {
+                    supertest(app)
+                    .get('/bookmarks')
+                    .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    .expect(expected)
+                });
+        });
+    });
+  });
+
   describe('POST /bookmarks', () => {
     it('responds with 400 if title not supplied', () => {
         const bookmarkNoTitle = {
