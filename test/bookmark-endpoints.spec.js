@@ -18,6 +18,7 @@ describe('Bookmark Endpoints', () => {
   after('disconnect from db', () => db.destroy());
   
   before('clean table', () => db('bookmarks').truncate());
+  
   afterEach('clean table', () => db('bookmarks').truncate());
 
   describe('GET /bookmarks', () => {
@@ -131,9 +132,7 @@ describe('Bookmark Endpoints', () => {
         .post('/bookmarks')
         .send(bookmarkNoTitle)
         .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-        .expect(400, {
-          error: {message: 'title is required'}
-        });
+        .expect(400, 'title is required');
     });  
 
     it('responds with 400 if url not supplied', () => {
@@ -146,9 +145,7 @@ describe('Bookmark Endpoints', () => {
         .post('/bookmarks')
         .send(bookmarkNoUrl)
         .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-        .expect(400, {
-          error: {message: 'url is required'}
-        });
+        .expect(400, 'url is required');
     });
     
     it('responds with 400 if url not valid', () => {
@@ -161,9 +158,7 @@ describe('Bookmark Endpoints', () => {
         .post('/bookmarks')
         .send(bookmarkInvalidUrl)
         .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-        .expect(400, {
-          error: {message: 'url is invalid'}
-        });
+        .expect(400, 'Invalid URL');
     });
 
     it('responds with 400 if rating not supplied', () => {
@@ -176,9 +171,7 @@ describe('Bookmark Endpoints', () => {
         .post('/bookmarks')
         .send(bookmarkNoRating)
         .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-        .expect(400, {
-          error: {message: 'rating is required'}
-        });
+        .expect(400, 'rating is required');
     });
 
     it('responds with 400 if rating is not between 0 and 5', () => {
@@ -191,9 +184,7 @@ describe('Bookmark Endpoints', () => {
         .post('/bookmarks')
         .send(bookmarkInvalidRating)
         .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-        .expect(400, {
-          error: {message: 'rating is invalid'}
-        });
+        .expect(400, 'Invalid rating');
     });
 
     it('adds new bookmark to store', () => {

@@ -1,9 +1,9 @@
 'use strict';
 const express    = require('express');
-const uuid       = require('uuid/v4');
+// const uuid       = require('uuid/v4');
 const {isWebUri} = require('valid-url');
 const logger     = require('../logger');
-const store      = require('../store');
+// const store      = require('../store');
 const BookmarksService = require('./bookmarks-service');
 const xss        = require('xss');
 
@@ -59,13 +59,13 @@ bookmarkRouter
       bookmark
     )
       .then(bookmark => {
-        logger.info(`Bookmark created`)
+        logger.info(`Bookmark created`);
         res
           .status(201)
           .location(`/bookmarks/${bookmark.id}`)
-          .json(serializeBookmarks(bookmark))
+          .json(serializeBookmarks(bookmark));
       })
-      .catch(next)
+      .catch(next);
   });
 
 bookmarkRouter
@@ -88,7 +88,7 @@ bookmarkRouter
       .catch(next)
   })
   .get((req, res) => {
-    res.json(serializeBookmarks(res.bookmark))
+    res.json(serializeBookmarks(res.bookmark));
   })
   .delete((req, res, next) => {
     const {bookmark_id} = req.params;

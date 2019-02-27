@@ -26,3 +26,48 @@
 {"message":"rating is required","level":"error"}
 {"message":"Invalid rating","level":"error"}
 {"message":"Bookmark created","level":"info"}
+{"message":"Bookmark not found","level":"error"}
+{"message":"Bookmark not found","level":"error"}
+{"message":"Bookmark deleted","level":"info"}
+{"message":"title is required","level":"error"}
+{"message":"url is required","level":"error"}
+{"message":"Invalid URL","level":"error"}
+{"message":"rating is required","level":"error"}
+{"message":"Invalid rating","level":"error"}
+{"message":"Bookmark created","level":"info"}
+{"message":"Bookmark not found","level":"error"}
+{"message":"Bookmark not found","level":"error"}
+{"message":"Bookmark deleted","level":"info"}
+{"message":"title is required","level":"error"}
+{"message":"url is required","level":"error"}
+{"message":"Invalid URL","level":"error"}
+{"message":"rating is required","level":"error"}
+{"message":"Invalid rating","level":"error"}
+{"message":"Bookmark created","level":"info"}
+{"message":"Bookmark not found","level":"error"}
+{"message":"Bookmark not found","level":"error"}
+{"message":"Bookmark deleted","level":"info"}
+{"message":"title is required","level":"error"}
+{"message":"url is required","level":"error"}
+{"message":"Invalid URL","level":"error"}
+{"message":"rating is required","level":"error"}
+{"message":"Invalid rating","level":"error"}
+{"message":"Bookmark created","level":"info"}
+{"message":"Bookmark not found","level":"error"}
+{"message":"Bookmark not found","level":"error"}
+{"message":"Bookmark deleted","level":"info"}
+{"message":"title is required","level":"error"}
+{"message":"url is required","level":"error"}
+{"message":"Invalid URL","level":"error"}
+{"message":"rating is required","level":"error"}
+{"message":"Invalid rating","level":"error"}
+{"message":"Bookmark created","level":"info"}
+{"message":"Bookmark not found","level":"error"}
+{"message":"Bookmark not found","level":"error"}
+{"message":"Bookmark deleted","level":"info"}
+{"message":"title is required","level":"error"}
+{"message":"url is required","level":"error"}
+{"message":"Invalid URL","level":"error"}
+{"message":"rating is required","level":"error"}
+{"message":"Invalid rating","level":"error"}
+{"message":"Bookmark created","level":"info"}
